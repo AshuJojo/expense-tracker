@@ -1,6 +1,9 @@
 :root {
   /* Global variables to be defined here */
-  /* --color-white: #ffffff; */
+  --color-primary: #F4BB4A;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
 }
 
 *,
@@ -16,11 +19,13 @@
 html,
 body {
   height: 100%;
+  font-family: "Ubuntu", sans-serif;
 }
 
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background-color: #3B3B3B;
 }
 
 img,

@@ -1,0 +1,20 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1.25rem;
+}
+
+.Title {
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 2.298rem;
+    color: var(--color-white)
+}
+
+/* .ExpenseTrackerContainer {
+    background-color: #626262;
+    width: 100%;
+    padding: 1.5rem;
+    margin: 0.5rem 0rem;
+    border-radius: 10px;
+} */

@@ -1,8 +1,8 @@
-import Home from "./components/Home/Home"
+import ExpenseTracker from "./components/ExpenseTracker/ExpenseTracker"
 
 function App() {
   return (
-    <div><Home /></div>
+    <div><ExpenseTracker /></div>
   )
 }
 

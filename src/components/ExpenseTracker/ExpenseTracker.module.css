@@ -1,13 +1,41 @@
 .Container {
-    background-color: #626262;
-    width: 100%;
-    padding: 0.75rem;
-    margin: 0.5rem 0rem;
-    border-radius: 10px;
-
+    min-height: 90vh;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
+    padding: 0.75rem 1.25rem;
+    gap: 2rem;
+}
 
-    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+.Title {
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 2.298rem;
+    color: var(--color-white)
+}
+
+.Subheading{
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 2rem;
+    font-style: italic;
+    color: var(--color-white);
+}
+
+.Row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    gap: 1.5rem;
+}
+
+.ExpenseTracker {
+    width: 100%;
+}
+
+.RecentTransactions {
+    width: 65%;
+}
+
+.TopExpenses {
+    width: 33%;
 }

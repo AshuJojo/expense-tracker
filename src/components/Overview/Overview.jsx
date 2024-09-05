@@ -4,8 +4,8 @@ import styles from './Overview.module.css';
 function Overview() {
     return (
         <div className={styles.Container}>
-            <CustomCard isIncomeCard={true} income={4500} handleAddIncome={() => { console.log('Add Income') }} />
-            <CustomCard isIncomeCard={false} expense={500} handleAddExpense={() => { console.log('Add Expense') }} />
+            <CustomCard isIncomeCard={true} />
+            <CustomCard isIncomeCard={false} />
         </div>
     )
 }

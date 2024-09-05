@@ -5,14 +5,14 @@
     height: 100%;
     margin: 1rem 0rem;
     padding: 0rem 0.333rem 0.625rem 1.688rem;
-    
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
 
-.TransactionItemContainer{
+.TransactionItemContainer {
     width: 100%;
 }
 
@@ -76,15 +76,15 @@
 }
 
 .IconBtn {
-    height: 2.313rem;
-    width: 2.313rem;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 15px;
     font-size: 1.75rem;
     border: 0;
+    padding: 0.5rem;
     color: var(--color-white);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .DeleteBtn {
@@ -95,7 +95,7 @@
     background-color: #F4BB4A;
 }
 
-.Divider{
+.Divider {
     width: 100%;
     background-color: #9B9B9B;
 }

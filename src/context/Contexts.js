@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
-const IncomeContext = createContext(5000);
-const TotalExpensesContext = createContext(0);
-const ExpensesContext = createContext([]);
+const IncomeContext = createContext();
+const TotalExpensesContext = createContext();
+const ExpensesContext = createContext();
 
-export {IncomeContext, TotalExpensesContext, ExpensesContext};
+export { IncomeContext, TotalExpensesContext, ExpensesContext };

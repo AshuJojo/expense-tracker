@@ -4,9 +4,10 @@ import { PiGiftLight, PiPizzaLight, PiSuitcaseRollingLight } from 'react-icons/p
 import { FiEdit2 } from 'react-icons/fi';
 import { useContext, useEffect, useState } from 'react';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
-import { ExpensesContext } from '../../context/Contexts';
+import { ExpensesContext, TotalExpensesContext } from '../../context/Contexts';
 
 function RecentTransactions() {
+    const { totalExpenses, setTotalExpenses } = useContext(TotalExpensesContext);
     const { expenses, setExpenses } = useContext(ExpensesContext);
 
     const [page, setPage] = useState(1);
@@ -34,9 +35,29 @@ function RecentTransactions() {
         )
     }
 
+    const handleDelete = (id) => {
+        const idx = expenses.findIndex(expense => expense.id === id);
+
+        console.log(`id: ${id} idx: ${idx}`);
+
+        setTotalExpenses(totalExpenses - expenses[idx].price);
+
+        const newExpenses = [...expenses];
+        newExpenses.splice(idx, 1);
+
+        setExpenses(newExpenses);
+
+        if (newExpenses.length < 3 * page - 2 && page !== 1) {
+            setPage(page - 1)
+        }
+    }
+
     useEffect(() => {
         const end = 3 * page;
         const start = end - 3;
+
+        console.log(expenses);
+        console.log(page);
 
         const tempData = expenses.slice(start, end);
         setFilteredData(tempData);
@@ -70,7 +91,13 @@ function RecentTransactions() {
                                         </div>
                                     </div>
                                     <div className={styles.TransactionAction}>
-                                        <button type='button' className={`${styles.IconBtn} ${styles.DeleteBtn}`}><TiDeleteOutline /></button>
+                                        <button
+                                            className={`${styles.IconBtn} ${styles.DeleteBtn}`}
+                                            type='button'
+                                            onClick={() => { handleDelete(item.id) }}
+                                        >
+                                            <TiDeleteOutline />
+                                        </button>
                                         <button type='button' className={`${styles.IconBtn} ${styles.EditBtn}`}><FiEdit2 /></button>
                                     </div>
                                 </div>

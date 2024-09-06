@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import {
     BarChart,
     Bar,
@@ -5,15 +6,36 @@ import {
     YAxis,
     ResponsiveContainer
 } from "recharts";
+import { ExpensesContext } from "../../context/Contexts";
 
 export default function ExpensesBarChart() {
-    const data = [
-        { name: "Entertainment", value: 300 },
-        { name: "Food", value: 704 },
-        { name: "Travel", value: 3050 },
-    ];
+    const { expenses } = useContext(ExpensesContext);
 
-    console.log("data", data);
+    const [data, setData] = useState([
+        { name: "Entertainment", value: 0 },
+        { name: "Food", value: 0 },
+        { name: "Travel", value: 0 },
+    ]);
+
+    const getTotalCategoryExpense = (category) => {
+        return expenses.reduce((sum, expense) => {
+            if (expense.category === category.toLowerCase())
+                return parseInt(sum) + parseInt(expense.price);
+            return sum;
+        }, 0)
+    }
+
+    const setDataValuesFromExpenses = () => {
+        setData(data.map((category) => {
+            return { ...category, value: getTotalCategoryExpense(category.name) };
+        }));
+    }
+
+    useEffect(() => {
+        if (expenses.length > 0)
+            setDataValuesFromExpenses();
+    }, [expenses]);
+
     return (
         <ResponsiveContainer width='100%' height='100%'>
             <BarChart

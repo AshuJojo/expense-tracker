@@ -4,9 +4,7 @@ import styles from './TopExpenses.module.css';
 function TopExpenses() {
     return (
         <div className={styles.Container}>
-            <div className={styles.ChartContainer}>
-                <ExpensesBarChart />
-            </div>
+            <ExpensesBarChart />
         </div>
     )
 }

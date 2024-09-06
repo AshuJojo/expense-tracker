@@ -4,14 +4,10 @@
     width: 100%;
     min-height: 24rem;
     margin: 1rem 0rem;
+    padding: 0rem 0.75rem;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-}
-
-.ChartContainer{
-    width: 28rem;
-    height: 24rem;
 }

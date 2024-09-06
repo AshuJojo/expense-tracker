@@ -33,9 +33,15 @@
 }
 
 .RecentTransactions {
-    width: 65%;
+    flex-grow: 1;
 }
 
 .TopExpenses {
-    width: 33%;
+    flex-grow: 0;
+}
+
+@media only screen and (max-width: 900px) {
+    .Row{
+        flex-direction: column;
+    }
 }

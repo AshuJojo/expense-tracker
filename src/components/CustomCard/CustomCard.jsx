@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
 import styles from './CustomCard.module.css';
 import { IncomeContext, TotalExpensesContext } from '../../context/Contexts';
-import AddIncomeModal from '../AddIncomeModal/AddIncomeModal';
+import AddIncomeModal from '../IncomeModal/IncomeModal';
+import AddExpenseModal from '../ExpenseModal/ExpenseModal';
 
 function CustomCard({ isIncomeCard }) {
     const { income, setIncome } = useContext(IncomeContext);
@@ -15,7 +16,7 @@ function CustomCard({ isIncomeCard }) {
             <h1 className={styles.CardTitle}>
                 {isIncomeCard ? 'Wallet Balance: ' : 'Expenses: '}
                 <span className={isIncomeCard ? styles.Income : styles.Expense}>
-                    ₹{isIncomeCard ? income : totalExpenses}
+                    ₹{isIncomeCard ? income - totalExpenses : totalExpenses}
                 </span>
             </h1>
 
@@ -25,8 +26,8 @@ function CustomCard({ isIncomeCard }) {
             </button>
 
             {isIncomeCard ?
-                <AddIncomeModal isOpen={showAddIncomeModal} closeModal={() => {setShowAddIncomeModal(false)}}/> :
-                <></>
+                <AddIncomeModal isOpen={showAddIncomeModal} closeModal={() => { setShowAddIncomeModal(false) }} /> :
+                <AddExpenseModal isOpen={showAddExpenseModal} closeModal={() => { setShowAddExpenseModal(false) }} />
             }
         </div>
     )

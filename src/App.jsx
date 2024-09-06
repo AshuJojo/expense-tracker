@@ -16,10 +16,11 @@ function App() {
       setIncome(persistedBalance);
 
     if (persistedTotalExpenses)
-      setTotalExpenses(persistedExpenses);
+      setTotalExpenses(persistedTotalExpenses);
 
     if (persistedExpenses)
-      setExpenses(expenses);
+      setExpenses(JSON.parse(persistedExpenses));
+
   }, []);
 
   return (

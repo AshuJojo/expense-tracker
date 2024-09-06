@@ -22,13 +22,18 @@
 
 .Form {
     display: flex;
-    gap: 0.75rem;
+    flex-direction: column;
     font-family: "Open Sans", sans-serif;
 }
 
+.Row{
+    display: flex;
+    gap: 0.75rem;
+}
+
 .InputContainer{
-    width: 20rem;
-    min-height:5rem;
+    width: 15rem;
+    min-height:4rem;
     display: flex;
     flex-direction: column;
 }
@@ -57,10 +62,25 @@
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.AddBalanceBtn {
+.FormBtnGrp{
+    width: 70%;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.AddExpenseBtn {
     color: var(--color-white);
     background-color: #F4BB4A;
     font-weight: 700;
+    flex-grow: 1;
+}
+
+.PlaceholderText{
+    color: #919191;
+}
+
+.OptionText{
+    color: var(--color-black);
 }
 
 .CancelBtn{

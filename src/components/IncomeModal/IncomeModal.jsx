@@ -1,30 +1,33 @@
 import ReactModal from 'react-modal';
-import styles from './AddIncomeModal.module.css';
-import { useContext, useEffect, useState } from 'react';
+import styles from './IncomeModal.module.css';
+import { useContext, useState } from 'react';
 import { IncomeContext } from '../../context/Contexts';
 import { useSnackbar } from 'notistack';
 
-function AddIncomeModal({ isOpen, closeModal }) {
+function IncomeModal({ isOpen, closeModal }) {
     const [value, setValue] = useState('');
     const { income, setIncome } = useContext(IncomeContext);
     const { enqueueSnackbar } = useSnackbar();
+    const [error, setError] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (value >= 0) {
-            setIncome(value);
-            localStorage.setItem('income', value);
-            closeModal();
+        if (value) {
+            if (value >= 0) {
+                setError(null);
+                setIncome(value);
+                localStorage.setItem('income', value);
+                closeModal();
 
-            enqueueSnackbar('Successfully added your income.', { variant: 'success' });
+                enqueueSnackbar('Successfully added your income.', { variant: 'success' });
+            } else {
+                setError('Income should not be negative.')
+            }
+        } else {
+            setError('This field cannot be empty.');
         }
     }
-
-    useEffect(() => {
-        if (income)
-            setValue(income);
-    }, []);
 
     return (
         <ReactModal
@@ -44,7 +47,7 @@ function AddIncomeModal({ isOpen, closeModal }) {
                             value={value}
                             onChange={(e) => { setValue(e.target.value) }}
                         />
-                        {value < 0 && <div className={styles.InputErrorMsg}>Income should be greater or equals to 0.</div>}
+                        {error && <div className={styles.InputErrorMsg}>{error}</div>}
                     </div>
 
                     <button
@@ -68,4 +71,4 @@ function AddIncomeModal({ isOpen, closeModal }) {
     )
 }
 
-export default AddIncomeModal
+export default IncomeModal

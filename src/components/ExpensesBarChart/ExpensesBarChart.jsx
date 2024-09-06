@@ -12,9 +12,9 @@ export default function ExpensesBarChart() {
     const { expenses } = useContext(ExpensesContext);
 
     const [data, setData] = useState([
-        { name: "Entertainment", value: 0 },
-        { name: "Food", value: 0 },
-        { name: "Travel", value: 0 },
+        { name: "Entertainment", value: null },
+        { name: "Food", value: null },
+        { name: "Travel", value: null },
     ]);
 
     const getTotalCategoryExpense = (category) => {
@@ -27,7 +27,8 @@ export default function ExpensesBarChart() {
 
     const setDataValuesFromExpenses = () => {
         setData(data.map((category) => {
-            return { ...category, value: getTotalCategoryExpense(category.name) };
+            const totalCategoryExpenses = getTotalCategoryExpense(category.name);
+            return { ...category, value: totalCategoryExpenses };
         }));
     }
 

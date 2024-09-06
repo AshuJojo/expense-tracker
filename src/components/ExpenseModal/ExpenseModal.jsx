@@ -1,11 +1,10 @@
 import ReactModal from 'react-modal';
 import styles from './ExpenseModal.module.css';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ExpensesContext, IncomeContext, TotalExpensesContext } from '../../context/Contexts';
 import { useSnackbar } from 'notistack';
 
-function ExpenseModal({ isOpen, closeModal }) {
-
+function ExpenseModal({ isOpen, closeModal, id }) {
     const selectRef = useRef(null);
 
     const [formInput, setFormInput] = useState({
@@ -31,7 +30,6 @@ function ExpenseModal({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('form submitted');
 
         if (!formInput.title) {
             setError({ ...error, titleError: 'This field is required' });
@@ -51,17 +49,28 @@ function ExpenseModal({ isOpen, closeModal }) {
         }
 
         const updatedExpenses = [...expenses];
-        updatedExpenses.push({ ...formInput, id: Date.now() });
+        let updatedTotalExpenses = parseInt(totalExpenses);
+
+        if (!formInput.id) {
+            updatedExpenses.push({ ...formInput, id: Date.now() });
+            updatedTotalExpenses += parseInt(formInput.price);
+        } else {
+            const idx = expenses.findIndex((expense) => expense.id === formInput.id);
+
+            updatedTotalExpenses += parseInt(formInput.price) - parseInt(expenses[idx].price)
+
+            updatedExpenses[idx] = { ...formInput };
+        }
 
         setExpenses(updatedExpenses);
         localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
 
-        const updatedTotalExpenses = parseInt(totalExpenses) + parseInt(formInput.price);
 
         setTotalExpenses(updatedTotalExpenses);
         localStorage.setItem('totalExpenses', updatedTotalExpenses);
 
         setFormInput({
+            id: '',
             title: '',
             price: '',
             category: '',
@@ -86,13 +95,32 @@ function ExpenseModal({ isOpen, closeModal }) {
         newFormInput[id] = value;
 
         setFormInput(newFormInput);
+    }
 
+    useEffect(() => {
+        console.log('expenses', expenses)
+        if (!id)
+            return;
+
+        const expenseDetails = expenses.find((expense) => expense.id === id)
+
+        if (!expenseDetails)
+            return;
+
+        setFormInput(expenseDetails);
+    }, [id])
+
+    useEffect(() => {
+        if (!selectRef.current)
+            return;
+
+        console.log(selectRef.current);
         if (selectRef.current?.selectedIndex === 0) {
             selectRef.current.classList.add(styles.PlaceholderText);
         } else {
             selectRef.current.classList.remove(styles.PlaceholderText);
         }
-    }
+    }, [selectRef?.current]);
 
     return (
         <ReactModal
@@ -134,12 +162,11 @@ function ExpenseModal({ isOpen, closeModal }) {
                                 className={`${styles.Input} ${styles.PlaceholderText}`}
                                 id="category"
                                 onChange={handleInputChange}
-                                defaultChecked={0}
                             >
-                                <option value="" className={styles.PlaceholderText}>Select Category</option>
-                                <option value="food" className={styles.OptionText}>Food</option>
-                                <option value="entertainment" className={styles.OptionText}>Entertainment</option>
-                                <option value="travel" className={styles.OptionText}>Travel</option>
+                                <option value="" className={styles.PlaceholderText} selected={!formInput.category}>Select Category</option>
+                                <option value="food" className={styles.OptionText} selected={formInput.category === 'food'}>Food</option>
+                                <option value="entertainment" className={styles.OptionText} selected={formInput.category === 'entertainment'}>Entertainment</option>
+                                <option value="travel" className={styles.OptionText} selected={formInput.category === 'travel'}>Travel</option>
                             </select>
                             {error.categoryError && <div className={styles.InputErrorMsg}>{error.categoryError}</div>}
                         </div>

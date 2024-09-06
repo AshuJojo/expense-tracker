@@ -5,6 +5,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { useContext, useEffect, useState } from 'react';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { ExpensesContext, TotalExpensesContext } from '../../context/Contexts';
+import ExpenseModal from '../ExpenseModal/ExpenseModal';
 
 function RecentTransactions() {
     const { totalExpenses, setTotalExpenses } = useContext(TotalExpensesContext);
@@ -12,6 +13,9 @@ function RecentTransactions() {
 
     const [page, setPage] = useState(1);
     const [filteredData, setFilteredData] = useState([]);
+
+    const [showExpenseModal, setShowExpenseModal] = useState(false);
+    const [updateItemId, setUpdateItemId] = useState(0);
 
     const handlePagePrev = () => {
         if (page !== 1) {
@@ -40,16 +44,34 @@ function RecentTransactions() {
 
         console.log(`id: ${id} idx: ${idx}`);
 
-        setTotalExpenses(totalExpenses - expenses[idx].price);
+        const updatedTotalExpenses = totalExpenses - expenses[idx].price;
+        setTotalExpenses(updatedTotalExpenses);
+        localStorage.setItem('totalExpenses', updatedTotalExpenses);
 
         const newExpenses = [...expenses];
         newExpenses.splice(idx, 1);
 
         setExpenses(newExpenses);
+        localStorage.setItem('expenses', JSON.stringify(newExpenses));
 
         if (newExpenses.length < 3 * page - 2 && page !== 1) {
             setPage(page - 1)
         }
+
+    }
+
+    const handleUpdate = (id) => {
+        console.log(`id: ${id}`)
+        if (!id)
+            return;
+
+        setUpdateItemId(() => id);
+        setShowExpenseModal(true)
+    }
+
+    const handleClose = () => {
+        setUpdateItemId(0);
+        setShowExpenseModal(false);
     }
 
     useEffect(() => {
@@ -98,7 +120,13 @@ function RecentTransactions() {
                                         >
                                             <TiDeleteOutline />
                                         </button>
-                                        <button type='button' className={`${styles.IconBtn} ${styles.EditBtn}`}><FiEdit2 /></button>
+                                        <button
+                                            className={`${styles.IconBtn} ${styles.EditBtn}`}
+                                            type='button'
+                                            onClick={() => { handleUpdate(item.id) }}
+                                        >
+                                            <FiEdit2 />
+                                        </button>
                                     </div>
                                 </div>
                                 <hr className={styles.Divider} />
@@ -118,7 +146,7 @@ function RecentTransactions() {
                 <div className={styles.PlaceholderText}>Your Recent Transactions Will Show Here.</div>
             }
 
-
+            <ExpenseModal isOpen={showExpenseModal} closeModal={handleClose} id={updateItemId} />
         </div >
     )
 }

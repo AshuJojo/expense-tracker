@@ -23,7 +23,7 @@ function ExpensePieChart() {
 
     return (
       <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
+        {percent === 0 ? '' : `${(percent * 100).toFixed(0)}%`}
       </text>
     );
   };
@@ -61,6 +61,7 @@ function ExpensePieChart() {
           dataKey="value"
         >
           {data.map((entry, index) => {
+
             return (<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           })}
         </Pie>

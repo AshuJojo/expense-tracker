@@ -20,7 +20,6 @@ function App() {
 
     if (persistedExpenses)
       setExpenses(JSON.parse(persistedExpenses));
-
   }, []);
 
   return (

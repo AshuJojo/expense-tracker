@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { ExpensesContext, TotalExpensesContext } from '../../context/Contexts';
 import ExpenseModal from '../ExpenseModal/ExpenseModal';
+import { useSnackbar } from 'notistack';
 
 function RecentTransactions() {
     const { totalExpenses, setTotalExpenses } = useContext(TotalExpensesContext);
@@ -16,6 +17,8 @@ function RecentTransactions() {
 
     const [showExpenseModal, setShowExpenseModal] = useState(false);
     const [updateItemId, setUpdateItemId] = useState(0);
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const handlePagePrev = () => {
         if (page !== 1) {
@@ -58,6 +61,7 @@ function RecentTransactions() {
             setPage(page - 1)
         }
 
+        enqueueSnackbar('Expense deleted successfully.', { variant: 'success' });
     }
 
     const handleUpdate = (id) => {

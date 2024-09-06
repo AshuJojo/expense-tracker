@@ -84,6 +84,9 @@ function ExpenseModal({ isOpen, closeModal, id }) {
             dateError: ''
         });
 
+
+        enqueueSnackbar(`Expenses ${id ? 'updated' : 'added'} successfully`, { variant: 'success' });
+
         closeModal();
     }
 

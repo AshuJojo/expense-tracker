@@ -1,6 +1,7 @@
 import Overview from '../Overview/Overview';
 import styles from './ExpenseTracker.module.css';
 import RecentTransactions from '../RecentTransactions/RecentTransactions'
+import TopExpenses from '../TopExpenses/TopExpenses';
 
 function ExpenseTracker() {
     return (
@@ -16,6 +17,7 @@ function ExpenseTracker() {
                 </div>
                 <div className={styles.TopExpenses}>
                     <h1 className={styles.Subheading}>Top Expenses</h1>
+                    <TopExpenses />
                 </div>
             </div>
         </div>

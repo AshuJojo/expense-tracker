@@ -61,7 +61,6 @@ function ExpensePieChart() {
           dataKey="value"
         >
           {data.map((entry, index) => {
-            console.log('entry', entry)
             return (<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           })}
         </Pie>
